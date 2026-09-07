@@ -11,7 +11,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton('blade.compiler', function ($app) {
+            return new \Illuminate\View\Compilers\BladeCompiler(
+                $app['files'],
+                '/tmp'
+            );
+        });
     }
 
     /**
