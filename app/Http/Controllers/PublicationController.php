@@ -292,6 +292,7 @@ class PublicationController extends Controller
      */
     public function update(Request $request, Publication $publication)
     {
+        @set_time_limit(180);
 
         // Validasi input
         $request->validate([
@@ -373,38 +374,17 @@ class PublicationController extends Controller
             // Hapus hasil AI lama jika berkas baru diunggah
             $publication->aiResult()->delete();
         } else {
-            // Jika tidak ada berkas baru dan statusnya Selesai, perbarui analisis berdasarkan metadata baru
-            if ($publication->status === 'Selesai') {
-                $absolutePath = storage_path('app/public/' . $publication->pdf_path);
-                $extracted = app(\App\Services\PdfExtractionService::class)->extract($absolutePath);
-                
-                $aiResult = app(\App\Services\AiSummarizerService::class)->summarize(
-                    $data['title'],
-                    $data['category'],
-                    $data['year'],
-                    $publication->extracted_text ?? $extracted['text'],
-                    $publication->extracted_text ? [] : $extracted['pages'],
-                    $publication->page_count,
-                    $publication->file_size,
-                    $publication->created_at
-                );
-
-                $data['region'] = $aiResult['publication_information']['region'] ?? $publication->region;
-
-                $publication->aiResult()->updateOrCreate(
-                    ['publication_id' => $publication->id],
-                    [
-                        'summary' => $aiResult['summary'],
-                        'publication_information' => $aiResult['publication_information'],
-                        'topics' => $aiResult['topics'],
-                        'keywords' => $aiResult['keywords'],
-                        'key_points' => $aiResult['key_points'],
-                        'indicators' => $aiResult['indicators'],
-                        'trends' => $aiResult['trends'],
-                        'discussion_locations' => $aiResult['discussion_locations'],
-                        'conclusion' => $aiResult['conclusion'],
-                    ]
-                );
+            // Jika tidak ada berkas baru diunggah, perbarui metadata di publication_information jika hasil AI sudah ada
+            if ($publication->aiResult) {
+                $pubInfo = $publication->aiResult->publication_information ?? [];
+                if (is_array($pubInfo)) {
+                    $pubInfo['title'] = $data['title'];
+                    $pubInfo['category'] = $data['category'];
+                    $pubInfo['year'] = $data['year'];
+                    $publication->aiResult->update([
+                        'publication_information' => $pubInfo,
+                    ]);
+                }
             }
         }
 
@@ -471,6 +451,8 @@ class PublicationController extends Controller
      */
     public function saveExtractedText(Request $request, Publication $publication)
     {
+        @set_time_limit(180);
+
         $request->validate([
             'text' => 'required|string',
             'pages' => 'required|array',

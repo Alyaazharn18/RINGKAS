@@ -41,7 +41,7 @@ class PdfExtractionService
                 'page_count' => count($allPages),
                 'text_length' => strlen($pdf->getText()),
             ]);
-
+            
 
             foreach ($allPages as $page) {
                 if ($pageNum > $maxPagesToParse) {

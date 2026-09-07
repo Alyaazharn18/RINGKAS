@@ -19,6 +19,8 @@ class AiSummarizerService
      */
     public function summarize($title, $category, $year, $fullText, $pagesArray = [], $pageCount = null, $fileSize = null, $uploadDate = null)
     {
+        @set_time_limit(180);
+
         if (empty($title)) {
             return [
                 'summary' => 'Data tidak tersedia pada publikasi ini.',
