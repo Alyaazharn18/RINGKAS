@@ -11,6 +11,13 @@
     .animate-float {
         animation: float 6s ease-in-out infinite;
     }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 @endsection
 
 @section('content')
@@ -25,12 +32,16 @@
             <!-- Left Content: Headings & Search -->
             <div class="lg:col-span-7 space-y-6 text-left">
                 <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-100/80 rounded-full text-[11px] font-bold text-bps-lightBlue uppercase tracking-wider">
+                        <span class="w-1.5 h-1.5 rounded-full bg-bps-lightBlue animate-pulse"></span>
+                        Portal Ringkasan Publikasi Statistik BPS
+                    </div>
                     <h2 class="heading-font text-3xl md:text-4.5xl font-extrabold text-bps-navy tracking-tight leading-tight">
                         Akses Publikasi Statistik BPS <br class="hidden md:inline">
                         <span class="text-bps-lightBlue">Lebih Cepat dengan Ringkasan Cerdas</span>
                     </h2>
                     <p class="text-sm md:text-base text-slate-500 font-medium max-w-2xl leading-relaxed">
-                        Temukan informasi penting dari ribuan publikasi statistik BPS dalam ringkasan otomatis yang mudah dipahami.
+                        Temukan intisari dan indikator penting dari publikasi statistik BPS dalam ringkasan otomatis terstruktur yang mudah dipahami.
                     </p>
                 </div>
 
@@ -46,7 +57,7 @@
                             name="search"
                             value="{{ request('search') }}"
                             placeholder="Cari publikasi atau kata kunci (contoh: kemiskinan, IPM, inflasi...)"
-                            class="w-full bg-transparent pl-3 pr-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+                            class="w-full bg-transparent pl-3 pr-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none font-medium"
                         >
                     </div>
                     <button type="submit" class="px-7 py-3 bg-bps-lightBlue hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow-md shadow-blue-500/10 hover:shadow-lg transition-all cursor-pointer shrink-0">
@@ -57,11 +68,12 @@
                 <!-- Popular Tags -->
                 <div class="flex flex-wrap items-center gap-2 pt-2 text-xs font-semibold text-slate-400">
                     <span>Populer sekarang:</span>
-                    <a href="{{ route('home', ['search' => 'Kemiskinan']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-50 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Kemiskinan</a>
-                    <a href="{{ route('home', ['search' => 'IPM']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-50 text-bps-lightBlue rounded-full transition-colors cursor-pointer">IPM</a>
-                    <a href="{{ route('home', ['search' => 'Inflasi']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-50 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Inflasi</a>
-                    <a href="{{ route('home', ['search' => 'Tingkat Pengangguran']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-50 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Tingkat Pengangguran</a>
-                    <a href="{{ route('home', ['search' => 'Penduduk']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-50 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Penduduk</a>
+                    <a href="{{ route('home', ['category' => 'Statistik Sosial']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-100/60 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Statistik Sosial</a>
+                    <a href="{{ route('home', ['category' => 'Statistik Ekonomi']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-100/60 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Statistik Ekonomi</a>
+                    <a href="{{ route('home', ['search' => 'Kemiskinan']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-100/60 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Kemiskinan</a>
+                    <a href="{{ route('home', ['search' => 'IPM']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-100/60 text-bps-lightBlue rounded-full transition-colors cursor-pointer">IPM</a>
+                    <a href="{{ route('home', ['search' => 'Inflasi']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-100/60 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Inflasi</a>
+                    <a href="{{ route('home', ['category' => 'Sensus & Survei']) }}" class="px-3 py-1 bg-blue-50/50 hover:bg-blue-100/60 text-bps-lightBlue rounded-full transition-colors cursor-pointer">Sensus & Survei</a>
                 </div>
             </div>
 
@@ -95,7 +107,7 @@
                     <!-- Middle Title -->
                     <div class="pl-2 space-y-2">
                         <h4 class="heading-font text-base font-black tracking-wide leading-tight">STATISTIK INDONESIA</h4>
-                        <span class="text-[10px] font-extrabold text-bps-orange tracking-widest uppercase">TAHUN 2024</span>
+                        <span class="text-[10px] font-extrabold text-bps-orange tracking-widest uppercase">TAHUN 2026</span>
                     </div>
 
                     <!-- Bottom Graphic -->
@@ -112,11 +124,11 @@
 
                     <span class="text-[7px] font-black tracking-widest text-blue-100 uppercase pl-1">PROFIL DATA</span>
                     <div class="pl-1">
-                        <h4 class="heading-font text-xs font-black tracking-wide leading-tight">PROFIL KEMISKINAN</h4>
-                        <span class="text-[8px] font-extrabold text-blue-200 block mt-1">JAWA BARAT</span>
+                        <h4 class="heading-font text-xs font-black tracking-wide leading-tight">PROFIL SOSIAL</h4>
+                        <span class="text-[8px] font-extrabold text-blue-200 block mt-1">INDONESIA</span>
                     </div>
                     <div class="pl-1 flex items-center justify-between text-blue-100 border-t border-white/5 pt-2">
-                        <span class="text-[7px] font-bold">EDISI 2024</span>
+                        <span class="text-[7px] font-bold">EDISI 2026</span>
                         <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 text-blue-200"></i>
                     </div>
                 </div>
@@ -128,106 +140,135 @@
     <!-- CONTENT WRAPPER -->
     <main class="flex-1 p-6 md:p-12 max-w-7xl mx-auto w-full space-y-16">
         
-        <!-- SECTION 1: KATEGORI PUBLIKASI -->
+        <!-- SECTION 1: KATEGORI PUBLIKASI (8 Kategori Resmi Admin BPS) -->
         <section id="kategori-publikasi" class="space-y-6">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
                 <div>
                     <h3 class="heading-font text-xl md:text-2xl font-black text-bps-navy tracking-tight">Kategori Publikasi</h3>
-                    <p class="text-xs md:text-sm text-slate-400 font-medium mt-1">Saring publikasi berdasarkan kategori data sektoral BPS</p>
+                    <p class="text-xs md:text-sm text-slate-400 font-medium mt-1">Saring publikasi berdasarkan 8 kategori data sektoral BPS</p>
                 </div>
-                <a href="#publikasi-terbaru" class="text-bps-lightBlue hover:text-blue-700 font-bold text-xs md:text-sm flex items-center gap-1 transition-colors">
-                    <span>Lihat semua kategori</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                @if(request('category'))
+                    <a href="{{ route('home') }}" class="text-rose-500 hover:text-rose-700 font-bold text-xs md:text-sm flex items-center gap-1.5 transition-colors self-start sm:self-auto">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i>
+                        <span>Hapus Filter Kategori</span>
+                    </a>
+                @else
+                    <a href="#publikasi-terbaru" class="text-bps-lightBlue hover:text-blue-700 font-bold text-xs md:text-sm flex items-center gap-1 transition-colors self-start sm:self-auto">
+                        <span>Lihat publikasi</span>
+                        <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                @endif
             </div>
 
-            <!-- Category Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
-                @php
-                    // Predefine grid templates matching mockups with specific colors and icons
-                    $predefinedCategories = [
-                        [
-                            'name' => 'Kependudukan',
-                            'match' => ['penduduk', 'kependudukan', 'umum'],
-                            'color' => 'bg-blue-50 text-blue-600 border-blue-100/50',
-                            'icon' => 'users'
-                        ],
-                        [
-                            'name' => 'Kemiskinan',
-                            'match' => ['miskin', 'kemiskinan', 'sosial'],
-                            'color' => 'bg-amber-50 text-amber-600 border-amber-100/50',
-                            'icon' => 'file-text'
-                        ],
-                        [
-                            'name' => 'Ketenagakerjaan',
-                            'match' => ['kerja', 'tenaga', 'ekonomi'],
-                            'color' => 'bg-emerald-50 text-emerald-600 border-emerald-100/50',
-                            'icon' => 'briefcase'
-                        ],
-                        [
-                            'name' => 'IPM',
-                            'match' => ['ipm', 'pembangunan', 'manusia', 'pertanian'],
-                            'color' => 'bg-purple-50 text-purple-600 border-purple-100/50',
-                            'icon' => 'trending-up'
-                        ],
-                        [
-                            'name' => 'Harga & Inflasi',
-                            'match' => ['harga', 'inflasi', 'distribusi', 'industri'],
-                            'color' => 'bg-rose-50 text-rose-600 border-rose-100/50',
-                            'icon' => 'shopping-cart'
-                        ],
-                        [
-                            'name' => 'Lainnya',
-                            'match' => [],
-                            'color' => 'bg-slate-50 text-slate-600 border-slate-200/50',
-                            'icon' => 'grid'
-                        ]
-                    ];
-                @endphp
+            <!-- 8 Official Categories Grid -->
+            @php
+                $categoryConfig = [
+                    'Publikasi Umum' => [
+                        'icon' => 'book-open',
+                        'bg' => 'bg-blue-50',
+                        'text' => 'text-blue-600',
+                        'border' => 'border-blue-100',
+                        'hover' => 'hover:border-blue-300 hover:shadow-blue-500/5',
+                        'badge' => 'bg-blue-100/60 text-blue-700',
+                    ],
+                    'Statistik Sosial' => [
+                        'icon' => 'users',
+                        'bg' => 'bg-amber-50',
+                        'text' => 'text-amber-600',
+                        'border' => 'border-amber-100',
+                        'hover' => 'hover:border-amber-300 hover:shadow-amber-500/5',
+                        'badge' => 'bg-amber-100/60 text-amber-700',
+                    ],
+                    'Statistik Ekonomi' => [
+                        'icon' => 'trending-up',
+                        'bg' => 'bg-emerald-50',
+                        'text' => 'text-emerald-600',
+                        'border' => 'border-emerald-100',
+                        'hover' => 'hover:border-emerald-300 hover:shadow-emerald-500/5',
+                        'badge' => 'bg-emerald-100/60 text-emerald-700',
+                    ],
+                    'Statistik Pertanian' => [
+                        'icon' => 'sprout',
+                        'bg' => 'bg-lime-50',
+                        'text' => 'text-lime-700',
+                        'border' => 'border-lime-100',
+                        'hover' => 'hover:border-lime-300 hover:shadow-lime-500/5',
+                        'badge' => 'bg-lime-100/60 text-lime-800',
+                    ],
+                    'Statistik Industri' => [
+                        'icon' => 'factory',
+                        'bg' => 'bg-purple-50',
+                        'text' => 'text-purple-600',
+                        'border' => 'border-purple-100',
+                        'hover' => 'hover:border-purple-300 hover:shadow-purple-500/5',
+                        'badge' => 'bg-purple-100/60 text-purple-700',
+                    ],
+                    'Statistik Distribusi' => [
+                        'icon' => 'shopping-cart',
+                        'bg' => 'bg-rose-50',
+                        'text' => 'text-rose-600',
+                        'border' => 'border-rose-100',
+                        'hover' => 'hover:border-rose-300 hover:shadow-rose-500/5',
+                        'badge' => 'bg-rose-100/60 text-rose-700',
+                    ],
+                    'Statistik Lingkungan' => [
+                        'icon' => 'trees',
+                        'bg' => 'bg-teal-50',
+                        'text' => 'text-teal-600',
+                        'border' => 'border-teal-100',
+                        'hover' => 'hover:border-teal-300 hover:shadow-teal-500/5',
+                        'badge' => 'bg-teal-100/60 text-teal-700',
+                    ],
+                    'Sensus & Survei' => [
+                        'icon' => 'clipboard-list',
+                        'bg' => 'bg-indigo-50',
+                        'text' => 'text-indigo-600',
+                        'border' => 'border-indigo-100',
+                        'hover' => 'hover:border-indigo-300 hover:shadow-indigo-500/5',
+                        'badge' => 'bg-indigo-100/60 text-indigo-700',
+                    ],
+                ];
+            @endphp
 
-                @foreach($predefinedCategories as $pCat)
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-5">
+                @foreach($officialCategories as $catName)
                     @php
-                        // Match categories from database to this predefined block
-                        $count = 0;
-                        $matchedCategoryName = null;
-                        foreach($categories as $dbCat) {
-                            $matches = false;
-                            if (empty($pCat['match'])) {
-                                // Default category check
-                                $matches = true;
-                                foreach($predefinedCategories as $otherCat) {
-                                    if (!empty($otherCat['match'])) {
-                                        foreach($otherCat['match'] as $m) {
-                                            if (str_contains(strtolower($dbCat), $m)) {
-                                                $matches = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                foreach($pCat['match'] as $m) {
-                                    if (str_contains(strtolower($dbCat), $m)) {
-                                        $matches = true;
-                                    }
-                                }
-                            }
-                            if ($matches) {
-                                $count += $categoryCounts[$dbCat] ?? 0;
-                                $matchedCategoryName = $dbCat;
-                            }
-                        }
-                        
-                        // Fallback click link: if matched category exists, link to it, else to search query
-                        $clickUrl = $matchedCategoryName ? route('home', ['category' => $matchedCategoryName]) : route('home', ['search' => $pCat['name']]);
+                        $cfg = $categoryConfig[$catName] ?? [
+                            'icon' => 'folder',
+                            'bg' => 'bg-slate-50',
+                            'text' => 'text-slate-600',
+                            'border' => 'border-slate-100',
+                            'hover' => 'hover:border-slate-300',
+                            'badge' => 'bg-slate-100 text-slate-700',
+                        ];
+                        $count = $categoryCounts[$catName] ?? 0;
+                        $isActive = request('category') === $catName;
+                        // Clicking an active category clears the filter, otherwise applies it
+                        $targetUrl = $isActive ? route('home') : route('home', array_merge(request()->except('page'), ['category' => $catName]));
                     @endphp
 
-                    <a href="{{ $clickUrl }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center gap-4 hover:shadow-md hover:border-slate-200/70 transition-all duration-300 cursor-pointer">
-                        <div class="w-12 h-12 rounded-xl {{ $pCat['color'] }} flex items-center justify-center shrink-0 border">
-                            <i data-lucide="{{ $pCat['icon'] }}" class="w-5.5 h-5.5"></i>
+                    <a 
+                        href="{{ $targetUrl }}" 
+                        class="group relative bg-white rounded-2xl border p-4 md:p-5 flex items-center gap-3.5 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 {{ $isActive ? 'border-bps-lightBlue ring-2 ring-blue-100 bg-blue-50/20' : $cfg['border'] . ' ' . $cfg['hover'] }}"
+                    >
+                        <!-- Category Icon -->
+                        <div class="w-11 h-11 md:w-12 md:h-12 rounded-xl {{ $cfg['bg'] }} {{ $cfg['text'] }} flex items-center justify-center shrink-0 border {{ $cfg['border'] }} transition-transform duration-300 group-hover:scale-105">
+                            <i data-lucide="{{ $cfg['icon'] }}" class="w-5 h-5 md:w-5.5 md:h-5.5"></i>
                         </div>
-                        <div class="min-w-0">
-                            <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate leading-snug">{{ $pCat['name'] }}</h4>
-                            <span class="text-[10px] md:text-xs text-slate-400 font-medium block mt-0.5">{{ $count }} Publikasi</span>
+
+                        <!-- Text Details -->
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-1">
+                                <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate leading-snug group-hover:text-bps-lightBlue transition-colors">
+                                    {{ $catName }}
+                                </h4>
+                                @if($isActive)
+                                    <span class="w-2 h-2 rounded-full bg-bps-lightBlue shrink-0" title="Filter aktif"></span>
+                                @endif
+                            </div>
+                            <span class="text-[10px] md:text-xs text-slate-400 font-medium block mt-0.5">
+                                {{ $count }} Publikasi
+                            </span>
                         </div>
                     </a>
                 @endforeach
@@ -235,44 +276,121 @@
         </section>
 
         <!-- SECTION 2: PUBLIKASI TERBARU -->
-        <section id="publikasi-terbaru" class="space-y-6">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <section id="publikasi-terbaru" class="space-y-6 scroll-mt-24">
+            
+            <!-- Section Header & Filter Status -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                 <div>
-                    <h3 class="heading-font text-xl md:text-2xl font-black text-bps-navy tracking-tight">Publikasi Terbaru</h3>
-                    <p class="text-xs md:text-sm text-slate-400 font-medium mt-1">Daftar publikasi statistik yang baru diunggah beserta ringkasan AI</p>
+                    <h3 class="heading-font text-xl md:text-2xl font-black text-bps-navy tracking-tight">Daftar Publikasi</h3>
+                    <p class="text-xs md:text-sm text-slate-400 font-medium mt-1">
+                        Daftar publikasi statistik resmi BPS beserta ringkasan cerdas
+                    </p>
                 </div>
-                <a href="{{ route('home') }}" class="text-bps-lightBlue hover:text-blue-700 font-bold text-xs md:text-sm flex items-center gap-1 transition-colors">
-                    <span>Lihat semua publikasi</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+
+                <!-- Active Filter Pill Indicator -->
+                @if(request('category') || request('search'))
+                    <div class="flex flex-wrap items-center gap-2">
+                        @if(request('category'))
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 border border-blue-100 text-bps-lightBlue text-xs font-bold rounded-xl shadow-sm">
+                                <span>Kategori: {{ request('category') }}</span>
+                                <a href="{{ route('home', request()->except('category')) }}" class="hover:text-rose-600 transition-colors p-0.5" title="Hapus filter kategori">
+                                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                                </a>
+                            </span>
+                        @endif
+
+                        @if(request('search'))
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold rounded-xl shadow-sm">
+                                <span>Pencarian: "{{ request('search') }}"</span>
+                                <a href="{{ route('home', request()->except('search')) }}" class="hover:text-rose-600 transition-colors p-0.5" title="Hapus pencarian">
+                                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                                </a>
+                            </span>
+                        @endif
+
+                        <a href="{{ route('home') }}" class="text-xs font-bold text-rose-500 hover:text-rose-700 hover:underline px-2 py-1 transition-colors">
+                            Reset Semua Filter
+                        </a>
+                    </div>
+                @else
+                    <span class="text-xs text-slate-400 font-bold bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-xl self-start md:self-auto">
+                        Total: {{ $publications->count() }} Publikasi
+                    </span>
+                @endif
             </div>
 
-            <!-- Publications Grid (mockup matching layout: cover on left, text details on right) -->
+            <!-- Horizontal Category Filter Pills (Quick 1-Click Filter) -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 pt-1 no-scrollbar select-none">
+                <!-- All Pill -->
+                <a 
+                    href="{{ route('home', request()->except('category')) }}" 
+                    class="px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer {{ !request('category') ? 'bg-bps-navy text-white shadow-md shadow-slate-900/10' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50' }}"
+                >
+                    Semua ({{ $totalAllPublications }})
+                </a>
+
+                <!-- 8 Categories Pills -->
+                @foreach($officialCategories as $catName)
+                    @php
+                        $isPillActive = request('category') === $catName;
+                        $catCount = $categoryCounts[$catName] ?? 0;
+                    @endphp
+                    <a 
+                        href="{{ $isPillActive ? route('home', request()->except('category')) : route('home', array_merge(request()->except('page'), ['category' => $catName])) }}" 
+                        class="px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer flex items-center gap-1.5 {{ $isPillActive ? 'bg-bps-lightBlue text-white shadow-md shadow-blue-500/20' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50' }}"
+                    >
+                        <span>{{ $catName }}</span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded-full {{ $isPillActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500' }}">
+                            {{ $catCount }}
+                        </span>
+                    </a>
+                @endforeach
+            </div>
+
+            <!-- Publications Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 @forelse ($publications as $pub)
                     @php
-                        // Determine cover colors based on category name
-                        $coverGradient = 'from-blue-600 to-indigo-700'; // Default
-                        $coverIcon = 'users';
+                        // Category theme mappings
                         $catLower = strtolower($pub->category);
-                        if (str_contains($catLower, 'sosial') || str_contains($catLower, 'miskin')) {
+                        $coverGradient = 'from-blue-600 to-indigo-700';
+                        $coverIcon = 'book-open';
+                        $badgeStyle = 'bg-blue-50 text-blue-700 border-blue-100';
+
+                        if (str_contains($catLower, 'sosial')) {
                             $coverGradient = 'from-amber-500 to-orange-600';
-                            $coverIcon = 'file-text';
-                        } elseif (str_contains($catLower, 'ekonomi') || str_contains($catLower, 'kerja')) {
+                            $coverIcon = 'users';
+                            $badgeStyle = 'bg-amber-50 text-amber-700 border-amber-100';
+                        } elseif (str_contains($catLower, 'ekonomi')) {
                             $coverGradient = 'from-emerald-500 to-teal-600';
-                            $coverIcon = 'briefcase';
-                        } elseif (str_contains($catLower, 'pertanian') || str_contains($catLower, 'ipm') || str_contains($catLower, 'manusia')) {
-                            $coverGradient = 'from-purple-500 to-violet-600';
                             $coverIcon = 'trending-up';
-                        } elseif (str_contains($catLower, 'distribusi') || str_contains($catLower, 'harga') || str_contains($catLower, 'inflasi')) {
+                            $badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-100';
+                        } elseif (str_contains($catLower, 'pertanian')) {
+                            $coverGradient = 'from-lime-600 to-emerald-700';
+                            $coverIcon = 'sprout';
+                            $badgeStyle = 'bg-lime-50 text-lime-800 border-lime-100';
+                        } elseif (str_contains($catLower, 'industri')) {
+                            $coverGradient = 'from-purple-500 to-violet-600';
+                            $coverIcon = 'factory';
+                            $badgeStyle = 'bg-purple-50 text-purple-700 border-purple-100';
+                        } elseif (str_contains($catLower, 'distribusi')) {
                             $coverGradient = 'from-rose-500 to-pink-600';
                             $coverIcon = 'shopping-cart';
+                            $badgeStyle = 'bg-rose-50 text-rose-700 border-rose-100';
+                        } elseif (str_contains($catLower, 'lingkungan')) {
+                            $coverGradient = 'from-teal-500 to-cyan-600';
+                            $coverIcon = 'trees';
+                            $badgeStyle = 'bg-teal-50 text-teal-700 border-teal-100';
+                        } elseif (str_contains($catLower, 'sensus') || str_contains($catLower, 'survei')) {
+                            $coverGradient = 'from-indigo-600 to-blue-700';
+                            $coverIcon = 'clipboard-list';
+                            $badgeStyle = 'bg-indigo-50 text-indigo-700 border-indigo-100';
                         }
                     @endphp
 
-                    <div class="bg-white rounded-3xl border border-slate-100/80 p-5 md:p-6 shadow-sm flex flex-col sm:flex-row gap-5 hover:shadow-md hover:border-slate-200/60 transition-all duration-300 relative group fade-in">
+                    <div class="bg-white rounded-3xl border border-slate-100/80 p-5 md:p-6 shadow-sm flex flex-col sm:flex-row gap-5 hover:shadow-md hover:border-slate-200/60 transition-all duration-300 relative group">
                         
-                        <!-- Left: Dynamic Book Cover (PDF OR CSS FALLBACK) -->
+                        <!-- Left: Dynamic Book Cover (PDF Canvas OR CSS Fallback) -->
                         <a href="{{ route('user.publications.show', $pub->id) }}" class="shrink-0 flex items-center justify-center cursor-pointer">
                             <div class="relative w-28 h-36 shrink-0 rounded-xl shadow-md overflow-hidden border border-slate-100 bg-slate-50 select-none group-hover:scale-[1.02] transition-transform duration-300">
                                 <!-- PDF Canvas Cover (rendered via PDF.js) -->
@@ -286,13 +404,13 @@
                                     <!-- Top category code -->
                                     <div class="flex items-center gap-1 pl-1">
                                         <div class="w-1.5 h-1.5 bg-bps-orange rounded-full"></div>
-                                        <span class="text-[6px] font-black tracking-widest text-slate-200 uppercase">{{ substr($pub->category, 0, 10) }}</span>
+                                        <span class="text-[6px] font-black tracking-widest text-slate-200 uppercase">{{ substr($pub->category, 0, 12) }}</span>
                                     </div>
 
                                     <!-- Center Cover Title -->
                                     <div class="pl-1 text-left">
-                                        <h4 class="font-extrabold text-[8px] tracking-wide leading-tight line-clamp-3 uppercase text-left">{{ $pub->title }}</h4>
-                                        <span class="text-[7px] text-bps-orange font-black block mt-0.5 text-left">{{ $pub->year }}</span>
+                                        <h4 class="font-extrabold text-[8.5px] tracking-wide leading-tight line-clamp-3 uppercase text-left">{{ $pub->title }}</h4>
+                                        <span class="text-[7.5px] text-bps-orange font-black block mt-0.5 text-left">{{ $pub->year }}</span>
                                     </div>
 
                                     <!-- Footer -->
@@ -314,45 +432,42 @@
                                     </a>
                                 </h4>
 
-                                <!-- Category pill -->
+                                <!-- Category & Year Badge -->
                                 <div class="flex items-center gap-2">
-                                    <span class="px-2.5 py-0.5 bg-blue-50/50 text-[10px] font-extrabold text-bps-lightBlue uppercase tracking-wide rounded-md">
+                                    <span class="px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide rounded-md border {{ $badgeStyle }}">
                                         {{ $pub->category }}
                                     </span>
                                     <span class="text-xs text-slate-400 font-bold">{{ $pub->year }}</span>
+                                    @if($pub->region)
+                                        <span class="text-xs text-slate-300 font-medium">•</span>
+                                        <span class="text-xs text-slate-500 font-semibold truncate">{{ $pub->region }}</span>
+                                    @endif
                                 </div>
 
-                                <!-- Description -->
-                                <p class="text-xs text-slate-400 font-medium leading-relaxed line-clamp-2">
+                                <!-- Summary Excerpt Description -->
+                                <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2">
                                     @php
                                         $displaySummary = $pub->summary ?: ($pub->aiResult?->summary ?: '');
                                     @endphp
-                                    {{ $displaySummary ? explode("\n", $displaySummary)[0] : "Publikasi analisis data statistik resmi " . ($pub->region ?? 'Badan Pusat Statistik') . " yang menyajikan data rilis resmi serta indikator utama." }}
+                                    {{ $displaySummary ? explode("\n", $displaySummary)[0] : "Publikasi data statistik resmi Badan Pusat Statistik yang menyajikan informasi terkini serta indikator sektoral." }}
                                 </p>
                             </div>
 
-                            <!-- Buttons -->
+                            <!-- Action Buttons -->
                             <div class="flex items-center gap-2.5 pt-4 border-t border-slate-50 mt-4">
-                                @if ($pub->status === 'Selesai' && ($pub->summary || $pub->aiResult?->summary))
-                                    <a 
-                                        href="{{ route('user.publications.show', $pub->id) }}" 
-                                        class="flex-1 py-2 px-3 bg-[#e8f0fe] hover:bg-[#d2e3fc] text-bps-lightBlue rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                                    >
-                                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                                        <span>Lihat Ringkasan</span>
-                                    </a>
-                                @else
-                                    <div class="flex-1 py-2 px-3 bg-slate-50 text-slate-400 rounded-xl font-bold text-xs text-center border border-slate-100 flex items-center justify-center gap-1 select-none">
-                                        <i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i>
-                                        <span>Diproses AI</span>
-                                    </div>
-                                @endif
+                                <a 
+                                    href="{{ route('user.publications.show', $pub->id) }}" 
+                                    class="flex-1 py-2 px-3 bg-[#e8f0fe] hover:bg-[#d2e3fc] text-bps-lightBlue rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                                >
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                    <span>Lihat Ringkasan</span>
+                                </a>
 
                                 @if ($pub->pdf_path)
                                     <a 
                                         href="{{ Storage::url($pub->pdf_path) }}" 
                                         download
-                                        class="px-4 py-2 bg-bps-lightBlue hover:bg-blue-700 text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1"
+                                        class="px-4 py-2 bg-bps-lightBlue hover:bg-blue-700 text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1 shadow-sm"
                                         title="Unduh Berkas PDF Asli"
                                     >
                                         <i data-lucide="download" class="w-3.5 h-3.5"></i>
@@ -364,14 +479,26 @@
 
                     </div>
                 @empty
-                    <div class="col-span-full bg-white rounded-3xl border border-slate-100 p-12 text-center flex flex-col items-center justify-center space-y-4">
-                        <div class="w-14 h-14 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center">
-                            <i data-lucide="inbox" class="w-7 h-7"></i>
+                    <!-- Empty State -->
+                    <div class="col-span-full bg-white rounded-3xl border border-slate-100 p-12 text-center flex flex-col items-center justify-center space-y-4 shadow-sm">
+                        <div class="w-16 h-16 bg-blue-50 text-bps-lightBlue rounded-2xl flex items-center justify-center">
+                            <i data-lucide="inbox" class="w-8 h-8"></i>
                         </div>
-                        <div>
-                            <h3 class="heading-font text-base font-bold text-bps-navy">Belum ada publikasi terdaftar</h3>
-                            <p class="text-xs text-slate-400 font-medium mt-1">Publikasi yang diunggah oleh admin akan muncul secara otomatis di sini.</p>
+                        <div class="max-w-md space-y-1">
+                            <h3 class="heading-font text-base font-bold text-bps-navy">Tidak ada publikasi ditemukan</h3>
+                            <p class="text-xs text-slate-400 font-medium">
+                                @if(request('category') || request('search'))
+                                    Tidak ada publikasi yang cocok dengan kriteria filter atau pencarian Anda.
+                                @else
+                                    Publikasi yang diunggah oleh administrator akan otomatis muncul di sini.
+                                @endif
+                            </p>
                         </div>
+                        @if(request('category') || request('search'))
+                            <a href="{{ route('home') }}" class="px-5 py-2.5 bg-bps-lightBlue hover:bg-blue-700 text-white rounded-xl font-bold text-xs transition-all shadow-md shadow-blue-500/10">
+                                Tampilkan Semua Publikasi
+                            </a>
+                        @endif
                     </div>
                 @endforelse
             </div>
@@ -410,7 +537,7 @@
                     <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-blue-300">
                         <i data-lucide="shield-check" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="font-extrabold text-sm md:text-base">Akses Gratis</h4>
+                    <h4 class="font-extrabold text-sm md:text-base">Akses Terbuka & Gratis</h4>
                     <p class="text-xs text-slate-400 leading-relaxed font-medium">
                         Seluruh publikasi terdaftar beserta ringkasannya dapat diakses secara gratis oleh seluruh pengguna umum.
                     </p>
@@ -421,7 +548,7 @@
                     <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-blue-300">
                         <i data-lucide="database" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="font-extrabold text-sm md:text-base">Sumber Resmi</h4>
+                    <h4 class="font-extrabold text-sm md:text-base">Sumber Resmi BPS</h4>
                     <p class="text-xs text-slate-400 leading-relaxed font-medium">
                         Seluruh data bersumber langsung dari Badan Pusat Statistik resmi sehingga akurasi kebenaran informasi terjamin.
                     </p>
@@ -431,107 +558,7 @@
 
     </main>
 
-
-
-    <!-- SUMMARY MODAL (Overlay Dialog) -->
-    <div id="summary-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-        <!-- Backdrop -->
-        <div id="modal-backdrop" onclick="closeSummaryModal()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300"></div>
-
-        <!-- Card Container -->
-        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100 relative z-10 scale-95 opacity-0 transition-all duration-300 ease-out" id="modal-card">
-            <!-- Modal Header -->
-            <div class="p-6 md:p-8 border-b border-slate-100 flex items-start justify-between gap-4">
-                <div class="space-y-2">
-                    <span id="modal-category" class="px-2.5 py-0.5 bg-blue-50 text-[10px] font-extrabold text-bps-lightBlue uppercase tracking-wide rounded-md">
-                        KATEGORI
-                    </span>
-                    <h3 id="modal-title" class="heading-font text-lg md:text-xl font-extrabold text-bps-navy tracking-tight leading-snug">
-                        Judul Publikasi
-                    </h3>
-                    <div class="flex items-center gap-4 text-xs text-slate-400 font-semibold">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                            Tahun <span id="modal-year">2026</span>
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-                            Wilayah <span id="modal-region">Indonesia</span>
-                        </span>
-                    </div>
-                </div>
-                <button onclick="closeSummaryModal()" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-xl transition-all cursor-pointer">
-                    <i data-lucide="x" class="w-5.5 h-5.5"></i>
-                </button>
-            </div>
-
-            <!-- Tab Headers -->
-            <div class="bg-slate-50/70 border-b border-slate-100 px-6 md:px-8 flex items-center gap-4 overflow-x-auto">
-                <button onclick="switchTab('ringkasan')" id="tab-btn-ringkasan" class="py-3 text-xs font-bold border-b-2 border-bps-lightBlue text-bps-lightBlue transition-all cursor-pointer">
-                    Ringkasan AI
-                </button>
-                <button onclick="switchTab('poin')" id="tab-btn-poin" class="py-3 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all cursor-pointer">
-                    Poin Penting
-                </button>
-                <button onclick="switchTab('indikator')" id="tab-btn-indikator" class="py-3 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all cursor-pointer">
-                    Indikator Statistik
-                </button>
-            </div>
-
-            <!-- Modal Content (Scrollable) -->
-            <div class="p-6 md:p-8 overflow-y-auto space-y-6 flex-1 text-sm text-slate-700 leading-relaxed font-medium">
-                
-                <!-- Tab: Ringkasan -->
-                <div id="tab-content-ringkasan" class="space-y-4 tab-content">
-                    <div class="bg-blue-50/20 border border-blue-100/30 rounded-2xl p-5 space-y-2">
-                        <h4 class="font-extrabold text-bps-navy text-xs uppercase tracking-wider flex items-center gap-1.5 text-bps-lightBlue">
-                            <i data-lucide="sparkles" class="w-4 h-4"></i>
-                            Ekstraksi Utama
-                        </h4>
-                        <p id="modal-summary-text" class="text-slate-600 leading-relaxed whitespace-pre-line"></p>
-                    </div>
-                    <div class="space-y-2">
-                        <h4 class="font-extrabold text-bps-navy text-xs uppercase tracking-wider">Kesimpulan Akhir</h4>
-                        <p id="modal-conclusion-text" class="text-slate-500 whitespace-pre-line"></p>
-                    </div>
-                </div>
-
-                <!-- Tab: Poin Penting -->
-                <div id="tab-content-poin" class="space-y-3 tab-content hidden">
-                    <h4 class="font-extrabold text-bps-navy text-xs uppercase tracking-wider text-bps-lightBlue">Temuan & Insight Utama</h4>
-                    <ul id="modal-key-points-list" class="space-y-2 list-disc pl-4 text-slate-600">
-                        <!-- Filled by JS -->
-                    </ul>
-                </div>
-
-                <!-- Tab: Indikator -->
-                <div id="tab-content-indikator" class="space-y-3 tab-content hidden">
-                    <h4 class="font-extrabold text-bps-navy text-xs uppercase tracking-wider text-bps-lightBlue">Metrik & Indikator Kunci</h4>
-                    <ul id="modal-indicators-list" class="space-y-2 list-disc pl-4 text-slate-600">
-                        <!-- Filled by JS -->
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="p-5 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-4 px-6 md:px-8">
-                <div class="flex items-center gap-2" id="modal-keywords-container">
-                    <!-- Keywords filled by JS -->
-                </div>
-                <a 
-                    id="modal-download-btn"
-                    href="#" 
-                    download
-                    class="py-2.5 px-5 bg-bps-lightBlue hover:bg-blue-700 text-white rounded-xl font-bold text-xs shadow-md shadow-blue-500/10 hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span>Download PDF</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Include PDF.js Library, Lucide Icons & Modal/Cover Logic script -->
+    <!-- Include PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -574,113 +601,5 @@
                 @endif
             @endforeach
         });
-
-        const modal = document.getElementById('summary-modal');
-        const backdrop = document.getElementById('modal-backdrop');
-        const card = document.getElementById('modal-card');
-
-        function openSummaryModal(pub) {
-            // Fill details
-            document.getElementById('modal-title').innerText = pub.title;
-            document.getElementById('modal-category').innerText = pub.category;
-            document.getElementById('modal-year').innerText = pub.year;
-            document.getElementById('modal-region').innerText = pub.region || 'Indonesia';
-            document.getElementById('modal-summary-text').innerText = pub.summary || '-';
-            document.getElementById('modal-conclusion-text').innerText = pub.conclusion || 'Kesimpulan belum tergenerate.';
-            
-            // Key Points
-            const keyPointsList = document.getElementById('modal-key-points-list');
-            keyPointsList.innerHTML = '';
-            let keyPoints = pub.key_points;
-            if (typeof keyPoints === 'string') {
-                try { keyPoints = JSON.parse(keyPoints); } catch(e) {}
-            }
-            if (Array.isArray(keyPoints) && keyPoints.length > 0) {
-                keyPoints.forEach(pt => {
-                    const li = document.createElement('li');
-                    li.innerText = pt;
-                    keyPointsList.appendChild(li);
-                });
-            } else {
-                keyPointsList.innerHTML = '<li class="text-slate-400 italic">Tidak ada data poin penting.</li>';
-            }
-
-            // Indicators
-            const indicatorsList = document.getElementById('modal-indicators-list');
-            indicatorsList.innerHTML = '';
-            let indicators = pub.indicators;
-            if (typeof indicators === 'string') {
-                try { indicators = JSON.parse(indicators); } catch(e) {}
-            }
-            if (Array.isArray(indicators) && indicators.length > 0) {
-                indicators.forEach(ind => {
-                    const li = document.createElement('li');
-                    li.innerText = ind;
-                    indicatorsList.appendChild(li);
-                });
-            } else {
-                indicatorsList.innerHTML = '<li class="text-slate-400 italic">Tidak ada data metrik/indikator.</li>';
-            }
-
-            // Keywords
-            const kwContainer = document.getElementById('modal-keywords-container');
-            kwContainer.innerHTML = '';
-            let keywords = pub.keywords;
-            if (typeof keywords === 'string') {
-                try { keywords = JSON.parse(keywords); } catch(e) {}
-            }
-            if (Array.isArray(keywords) && keywords.length > 0) {
-                keywords.slice(0, 3).forEach(kw => {
-                    const span = document.createElement('span');
-                    span.className = 'px-2 py-0.5 bg-slate-100 text-[10px] font-bold text-slate-500 rounded-md';
-                    span.innerText = kw;
-                    kwContainer.appendChild(span);
-                });
-            }
-
-            // Download Link
-            const dlBtn = document.getElementById('modal-download-btn');
-            if (pub.pdf_path) {
-                dlBtn.href = '/storage/' + pub.pdf_path.replace('public/', '');
-                dlBtn.style.display = 'flex';
-            } else {
-                dlBtn.style.display = 'none';
-            }
-
-            // Show modal
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                backdrop.classList.add('opacity-100');
-                card.classList.remove('scale-95', 'opacity-0');
-            }, 10);
-
-            // Reset Tab state
-            switchTab('ringkasan');
-        }
-
-        function closeSummaryModal() {
-            backdrop.classList.remove('opacity-100');
-            card.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-
-        function switchTab(tabId) {
-            const tabs = ['ringkasan', 'poin', 'indikator'];
-            tabs.forEach(t => {
-                const content = document.getElementById('tab-content-' + t);
-                const btn = document.getElementById('tab-btn-' + t);
-                if (t === tabId) {
-                    content.classList.remove('hidden');
-                    btn.classList.remove('border-transparent', 'text-slate-500');
-                    btn.classList.add('border-bps-lightBlue', 'text-bps-lightBlue');
-                } else {
-                    content.classList.add('hidden');
-                    btn.classList.remove('border-bps-lightBlue', 'text-bps-lightBlue');
-                    btn.classList.add('border-transparent', 'text-slate-500');
-                }
-            });
-        }
     </script>
 @endsection

@@ -127,9 +127,21 @@ class UserAuthController extends Controller
      */
     public function beranda(Request $request)
     {
-        $query = Publication::query();
+        // 8 Kategori Resmi Publikasi BPS yang sama dengan Admin
+        $officialCategories = [
+            'Publikasi Umum',
+            'Statistik Sosial',
+            'Statistik Ekonomi',
+            'Statistik Pertanian',
+            'Statistik Industri',
+            'Statistik Distribusi',
+            'Statistik Lingkungan',
+            'Sensus & Survei',
+        ];
 
-        // Filter berdasarkan kategori
+        $query = Publication::with('aiResult');
+
+        // Filter berdasarkan kategori jika ditentukan
         if ($request->filled('category')) {
             $query->where('category', $request->input('category'));
         }
@@ -145,26 +157,24 @@ class UserAuthController extends Controller
             });
         }
 
-        $publications = $query->latest('release_date')->get();
+        // Urutkan dari yang paling baru diunggah
+        $publications = $query->latest()->get();
 
-        // Dapatkan semua opsi kategori yang ada untuk filter tab
-        $categories = Publication::select('category')
-            ->distinct()
-            ->whereNotNull('category')
-            ->where('category', '!=', '')
-            ->pluck('category')
-            ->values();
-
-        // Hitung total per kategori
+        // Hitung total publikasi per masing-masing dari 8 kategori resmi
         $categoryCounts = [];
-        foreach ($categories as $cat) {
+        foreach ($officialCategories as $cat) {
             $categoryCounts[$cat] = Publication::where('category', $cat)->count();
         }
 
+        $totalAllPublications = Publication::count();
+
         return view('user.home', [
             'publications' => $publications,
-            'categories' => $categories,
+            'officialCategories' => $officialCategories,
             'categoryCounts' => $categoryCounts,
+            'totalAllPublications' => $totalAllPublications,
+            'selectedCategory' => $request->input('category'),
+            'searchQuery' => $request->input('search'),
         ]);
     }
 
