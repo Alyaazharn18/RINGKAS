@@ -235,4 +235,37 @@ class UserAuthController extends Controller
             'publication' => $publication,
         ]);
     }
+
+    /**
+     * Unduh PDF publikasi via proxy agar tercatat sebagai event download
+     * pada monitoring kunjungan admin (asal wilayah via IP geolocation).
+     */
+    public function downloadPublication(Request $request, Publication $publication)
+    {
+        try {
+            $ip = $request->ip();
+            $geo = app(\App\Services\IpGeolocationService::class)->locate($ip);
+
+            \App\Models\VisitLog::create([
+                'user_id' => Auth::id(),
+                'publication_id' => $publication->id,
+                'event_type' => 'download',
+                'ip_address' => $ip,
+                'region' => $geo['region'] ?? 'Tidak diketahui',
+                'city' => $geo['city'] ?? null,
+                'user_agent' => substr((string) $request->userAgent(), 0, 500),
+                'url' => substr($request->fullUrl(), 0, 500),
+            ]);
+        } catch (\Exception $e) {
+            // Tracking gagal tidak boleh menggagalkan download.
+        }
+
+        if (empty($publication->pdf_path) || !\Illuminate\Support\Facades\Storage::disk('public')->exists($publication->pdf_path)) {
+            return back()->with('error', 'Berkas PDF tidak ditemukan.');
+        }
+
+        $filename = \Illuminate\Support\Str::slug(substr($publication->title, 0, 60)) . '.pdf';
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->download($publication->pdf_path, $filename);
+    }
 }

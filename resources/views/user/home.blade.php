@@ -167,64 +167,64 @@
                         'icon' => 'book-open',
                         'bg' => 'bg-blue-50',
                         'text' => 'text-blue-600',
-                        'border' => 'border-blue-100',
-                        'hover' => 'hover:border-blue-300 hover:shadow-blue-500/5',
+                        'border' => 'border-blue-200/80',
+                        'hover' => 'hover:border-blue-300 hover:shadow-blue-500/10',
                         'badge' => 'bg-blue-100/60 text-blue-700',
                     ],
                     'Statistik Sosial' => [
                         'icon' => 'users',
                         'bg' => 'bg-amber-50',
                         'text' => 'text-amber-600',
-                        'border' => 'border-amber-100',
-                        'hover' => 'hover:border-amber-300 hover:shadow-amber-500/5',
+                        'border' => 'border-amber-200/80',
+                        'hover' => 'hover:border-amber-300 hover:shadow-amber-500/10',
                         'badge' => 'bg-amber-100/60 text-amber-700',
                     ],
                     'Statistik Ekonomi' => [
                         'icon' => 'trending-up',
                         'bg' => 'bg-emerald-50',
                         'text' => 'text-emerald-600',
-                        'border' => 'border-emerald-100',
-                        'hover' => 'hover:border-emerald-300 hover:shadow-emerald-500/5',
+                        'border' => 'border-emerald-200/80',
+                        'hover' => 'hover:border-emerald-300 hover:shadow-emerald-500/10',
                         'badge' => 'bg-emerald-100/60 text-emerald-700',
                     ],
                     'Statistik Pertanian' => [
                         'icon' => 'sprout',
                         'bg' => 'bg-lime-50',
                         'text' => 'text-lime-700',
-                        'border' => 'border-lime-100',
-                        'hover' => 'hover:border-lime-300 hover:shadow-lime-500/5',
+                        'border' => 'border-lime-200/80',
+                        'hover' => 'hover:border-lime-300 hover:shadow-lime-500/10',
                         'badge' => 'bg-lime-100/60 text-lime-800',
                     ],
                     'Statistik Industri' => [
                         'icon' => 'factory',
                         'bg' => 'bg-purple-50',
                         'text' => 'text-purple-600',
-                        'border' => 'border-purple-100',
-                        'hover' => 'hover:border-purple-300 hover:shadow-purple-500/5',
+                        'border' => 'border-purple-200/80',
+                        'hover' => 'hover:border-purple-300 hover:shadow-purple-500/10',
                         'badge' => 'bg-purple-100/60 text-purple-700',
                     ],
                     'Statistik Distribusi' => [
                         'icon' => 'shopping-cart',
                         'bg' => 'bg-rose-50',
                         'text' => 'text-rose-600',
-                        'border' => 'border-rose-100',
-                        'hover' => 'hover:border-rose-300 hover:shadow-rose-500/5',
+                        'border' => 'border-rose-200/80',
+                        'hover' => 'hover:border-rose-300 hover:shadow-rose-500/10',
                         'badge' => 'bg-rose-100/60 text-rose-700',
                     ],
                     'Statistik Lingkungan' => [
                         'icon' => 'trees',
                         'bg' => 'bg-teal-50',
                         'text' => 'text-teal-600',
-                        'border' => 'border-teal-100',
-                        'hover' => 'hover:border-teal-300 hover:shadow-teal-500/5',
+                        'border' => 'border-teal-200/80',
+                        'hover' => 'hover:border-teal-300 hover:shadow-teal-500/10',
                         'badge' => 'bg-teal-100/60 text-teal-700',
                     ],
                     'Sensus & Survei' => [
                         'icon' => 'clipboard-list',
                         'bg' => 'bg-indigo-50',
                         'text' => 'text-indigo-600',
-                        'border' => 'border-indigo-100',
-                        'hover' => 'hover:border-indigo-300 hover:shadow-indigo-500/5',
+                        'border' => 'border-indigo-200/80',
+                        'hover' => 'hover:border-indigo-300 hover:shadow-indigo-500/10',
                         'badge' => 'bg-indigo-100/60 text-indigo-700',
                     ],
                 ];
@@ -237,7 +237,7 @@
                             'icon' => 'folder',
                             'bg' => 'bg-slate-50',
                             'text' => 'text-slate-600',
-                            'border' => 'border-slate-100',
+                            'border' => 'border-slate-200',
                             'hover' => 'hover:border-slate-300',
                             'badge' => 'bg-slate-100 text-slate-700',
                         ];
@@ -249,11 +249,14 @@
 
                     <a 
                         href="{{ $targetUrl }}" 
-                        class="group relative bg-white rounded-2xl border p-4 md:p-5 flex items-center gap-3.5 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 {{ $isActive ? 'border-bps-lightBlue ring-2 ring-blue-100 bg-blue-50/20' : $cfg['border'] . ' ' . $cfg['hover'] }}"
+                        class="group relative bg-white rounded-2xl border p-4 flex items-center gap-3.5 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 {{ $isActive ? 'border-bps-lightBlue ring-2 ring-blue-100 bg-blue-50/20' : 'border-slate-200/80 ' . $cfg['hover'] }}"
                     >
-                        <!-- Category Icon -->
-                        <div class="w-11 h-11 md:w-12 md:h-12 rounded-xl {{ $cfg['bg'] }} {{ $cfg['text'] }} flex items-center justify-center shrink-0 border {{ $cfg['border'] }} transition-transform duration-300 group-hover:scale-105">
-                            <i data-lucide="{{ $cfg['icon'] }}" class="w-5 h-5 md:w-5.5 md:h-5.5"></i>
+                        <!-- Category Icon (Guaranteed 1:1 squircle, centered, spacious padding) -->
+                        <div 
+                            class="w-12 h-12 shrink-0 flex-none aspect-square rounded-2xl {{ $cfg['bg'] }} {{ $cfg['text'] }} flex items-center justify-center border {{ $cfg['border'] }} shadow-xs transition-transform duration-300 group-hover:scale-105"
+                            style="width: 48px; height: 48px; min-width: 48px; min-height: 48px; max-width: 48px; max-height: 48px; aspect-ratio: 1 / 1;"
+                        >
+                            <i data-lucide="{{ $cfg['icon'] }}" class="w-6 h-6 shrink-0 stroke-[1.8]" style="width: 24px; height: 24px;"></i>
                         </div>
 
                         <!-- Text Details -->
@@ -465,8 +468,7 @@
 
                                 @if ($pub->pdf_path)
                                     <a 
-                                        href="{{ Storage::url($pub->pdf_path) }}" 
-                                        download
+                                        href="{{ route('user.publications.download', $pub->id) }}" 
                                         class="px-4 py-2 bg-bps-lightBlue hover:bg-blue-700 text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1 shadow-sm"
                                         title="Unduh Berkas PDF Asli"
                                     >

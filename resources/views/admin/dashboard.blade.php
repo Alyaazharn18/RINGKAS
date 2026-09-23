@@ -57,11 +57,11 @@
         </a>
 
         <!-- Card 4: Total Pengguna -->
-        <div class="group bg-white p-6 rounded-xl shadow-md border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+        <a href="{{ route('users.index') }}" class="group bg-white p-6 rounded-xl shadow-md border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 block">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Pengguna</p>
-                    <h3 class="heading-font text-3xl font-black text-bps-navy mt-2 group-hover:text-indigo-600 transition-colors">1</h3>
+                    <h3 class="heading-font text-3xl font-black text-bps-navy mt-2 group-hover:text-indigo-600 transition-colors">{{ $totalUsers ?? 0 }}</h3>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
                     <!-- Users Icon -->
@@ -70,7 +70,7 @@
                     </svg>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- SECTION 2: 2 CHART PLACEHOLDERS -->
@@ -101,6 +101,111 @@
             </h3>
             <div class="flex-1 relative flex items-center justify-center min-h-[220px]">
                 <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2B: MONITORING KUNJUNGAN USER UMUM -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Kunjungan Halaman</p>
+            <h3 class="heading-font text-3xl font-black text-bps-navy mt-2">{{ $visitStats['totalVisits'] ?? 0 }}</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">Event view (Beranda & Detail)</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Download Dokumen</p>
+            <h3 class="heading-font text-3xl font-black text-bps-navy mt-2">{{ $visitStats['totalDownloads'] ?? 0 }}</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">Via tombol Download PDF</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pengunjung Unik</p>
+            <h3 class="heading-font text-3xl font-black text-bps-navy mt-2">{{ $visitStats['uniqueVisitors'] ?? 0 }}</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">Berdasarkan IP unik (IP disamarkan)</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100 flex flex-col min-h-[350px]">
+            <h3 class="heading-font text-base font-bold text-slate-800 mb-4 pb-3 border-b border-slate-50">
+                <span>Kunjungan 7 Hari Terakhir</span>
+            </h3>
+            <div class="flex-1 relative flex items-center justify-center min-h-[220px]">
+                <canvas id="visitsDailyChart"></canvas>
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100 flex flex-col min-h-[350px]">
+            <h3 class="heading-font text-base font-bold text-slate-800 mb-4 pb-3 border-b border-slate-50">
+                <span>Kunjungan per Wilayah (Top 8)</span>
+            </h3>
+            <div class="flex-1 relative flex items-center justify-center min-h-[220px]">
+                <canvas id="visitsRegionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden">
+            <div class="px-6 py-5 border-b border-slate-100">
+                <h3 class="heading-font text-base font-bold text-slate-800"><span>Publikasi Terpopuler</span></h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50/70 border-b border-slate-100">
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Judul</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Akses</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-sm">
+                        @forelse (($visitStats['topPublications'] ?? collect()) as $row)
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-4 font-bold text-slate-800 line-clamp-1" title="{{ $row->publication?->title ?? '-' }}">
+                                    {{ $row->publication?->title ?? ('ID #' . $row->publication_id) }}
+                                </td>
+                                <td class="px-6 py-4 text-center font-bold text-bps-navy">{{ $row->total }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="px-6 py-8 text-center text-slate-400 font-semibold italic">Belum ada data kunjungan.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden">
+            <div class="px-6 py-5 border-b border-slate-100">
+                <h3 class="heading-font text-base font-bold text-slate-800"><span>Aktivitas Terbaru</span></h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50/70 border-b border-slate-100">
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Waktu</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Event</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Wilayah</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">IP</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-sm">
+                        @forelse (($visitStats['recentVisits'] ?? collect()) as $log)
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-4 text-slate-500 font-medium whitespace-nowrap">{{ $log->created_at?->format('d-m-Y H:i') }}</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold {{ $log->event_type === 'download' ? 'bg-blue-50 text-blue-700' : 'bg-emerald-50 text-emerald-700' }}">
+                                        {{ $log->event_type }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-slate-600 font-medium">{{ $log->region ?? '-' }}{{ $log->city ? ' / ' . $log->city : '' }}</td>
+                                <td class="px-6 py-4 text-slate-400 font-medium">{{ $log->maskedIp() }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-6 py-8 text-center text-slate-400 font-semibold italic">Belum ada aktivitas.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -305,6 +410,61 @@
                         display: false
                     }
                 }
+            }
+        });
+        // Data monitoring kunjungan
+        const visitsByDay = @json($visitStats['visitsByDay'] ?? []);
+        const visitsByRegion = @json($visitStats['visitsByRegion'] ?? []);
+
+        // 3. Chart Kunjungan Harian (Line)
+        const ctxVisits = document.getElementById('visitsDailyChart').getContext('2d');
+        new Chart(ctxVisits, {
+            type: 'line',
+            data: {
+                labels: Object.keys(visitsByDay),
+                datasets: [{
+                    label: 'Kunjungan',
+                    data: Object.values(visitsByDay),
+                    borderColor: '#0266b3',
+                    backgroundColor: 'rgba(2, 102, 179, 0.12)',
+                    borderWidth: 2,
+                    tension: 0.35,
+                    fill: true,
+                    pointRadius: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 4. Chart Kunjungan per Wilayah (Horizontal Bar)
+        const ctxRegion = document.getElementById('visitsRegionChart').getContext('2d');
+        new Chart(ctxRegion, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(visitsByRegion),
+                datasets: [{
+                    label: 'Kunjungan',
+                    data: Object.values(visitsByRegion),
+                    backgroundColor: 'rgba(2, 102, 179, 0.75)',
+                    borderRadius: 8,
+                    barThickness: 14
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { beginAtZero: true, ticks: { stepSize: 1 } }
+                },
+                plugins: { legend: { display: false } }
             }
         });
     });

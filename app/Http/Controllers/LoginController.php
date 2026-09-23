@@ -120,6 +120,61 @@ class LoginController extends Controller
             $monthlyData[$monthLabel] = $count;
         }
 
+        // 4. Total akun terdaftar (admin + user umum)
+        $totalUsers = \App\Models\User::whereIn('role', ['admin', 'user'])->count();
+
+        // 5. Monitoring kunjungan user umum (tabel visit_logs)
+        $visitStats = [
+            'totalVisits' => 0,
+            'totalDownloads' => 0,
+            'uniqueVisitors' => 0,
+            'visitsByDay' => [],
+            'visitsByRegion' => [],
+            'topPublications' => collect(),
+            'recentVisits' => collect(),
+        ];
+
+        try {
+            $visitStats['totalVisits'] = \App\Models\VisitLog::where('event_type', 'view')->count();
+            $visitStats['totalDownloads'] = \App\Models\VisitLog::where('event_type', 'download')->count();
+            $visitStats['uniqueVisitors'] = \App\Models\VisitLog::select('ip_address')
+                ->distinct()->count('ip_address');
+
+            // Kunjungan per hari (7 hari terakhir, termasuk hari ini)
+            $visitsByDay = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $date = now()->subDays($i);
+                $visitsByDay[$date->format('d M')] = \App\Models\VisitLog::where('event_type', 'view')
+                    ->whereDate('created_at', $date->toDateString())->count();
+            }
+            $visitStats['visitsByDay'] = $visitsByDay;
+
+            // Kunjungan per wilayah (Top 8)
+            $visitStats['visitsByRegion'] = \App\Models\VisitLog::selectRaw('COALESCE(NULLIF(region, ""), "Tidak diketahui") as region, COUNT(*) as total')
+                ->where('event_type', 'view')
+                ->groupBy('region')
+                ->orderByDesc('total')
+                ->limit(8)
+                ->get()
+                ->pluck('total', 'region')
+                ->toArray();
+
+            // Publikasi terpopuler (view + download)
+            $visitStats['topPublications'] = \App\Models\VisitLog::selectRaw('publication_id, COUNT(*) as total')
+                ->whereNotNull('publication_id')
+                ->groupBy('publication_id')
+                ->orderByDesc('total')
+                ->limit(5)
+                ->with('publication')
+                ->get();
+
+            // Aktivitas kunjungan terbaru
+            $visitStats['recentVisits'] = \App\Models\VisitLog::with(['user', 'publication'])
+                ->latest()->limit(10)->get();
+        } catch (\Exception $e) {
+            // Tabel visit_logs belum dimigrasi → tampilkan nol, dashboard tetap jalan.
+        }
+
         return view('admin.dashboard', [
             'totalPublications' => $totalPublications,
             'totalCategories' => $totalCategories,
@@ -127,6 +182,8 @@ class LoginController extends Controller
             'categoryData' => $categoryData,
             'monthlyData' => $monthlyData,
             'recentPublications' => $recentPublications,
+            'visitStats' => $visitStats,
+            'totalUsers' => $totalUsers,
             'activeMenu' => 'dashboard'
         ]);
     }

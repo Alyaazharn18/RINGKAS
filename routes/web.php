@@ -6,6 +6,8 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAuthController;
 
+use App\Http\Controllers\ChatbotController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,11 +43,16 @@ Route::post('/notifications/read-all', function() {
     return redirect()->back();
 })->name('notifications.read-all');
 
-Route::middleware(['role:user,admin'])->group(function() {
+Route::middleware(['role:user,admin', 'track.visit'])->group(function() {
     Route::get('/home', [UserAuthController::class, 'beranda'])->name('home');
     Route::get('/profile', [UserAuthController::class, 'profile'])->name('profile');
     Route::post('/profile', [UserAuthController::class, 'updateProfile'])->name('profile.update');
     Route::get('/publications/{publication}', [UserAuthController::class, 'showPublication'])->name('user.publications.show');
+    Route::get('/publications/{publication}/download', [UserAuthController::class, 'downloadPublication'])->name('user.publications.download');
+
+    // Chatbot Universal AI Routes
+    Route::post('/chatbot/send', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
+    Route::get('/chatbot/suggestions', [ChatbotController::class, 'getSuggestions'])->name('chatbot.suggestions');
 });
 
 // AREA ADMINISTRATOR (Dilindungi role:admin dengan prefix /admin)

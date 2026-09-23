@@ -21,8 +21,14 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     ])
     ->withMiddleware(function (Middleware $middleware): void {
+        // Percayai header X-Forwarded-For dari proxy (ngrok saat dev,
+        // CDN/load-balancer saat produksi) agar $request->ip()
+        // mengembalikan IP publik pengunjung asli, bukan IP proxy lokal.
+        // Produksi: ganti '*' dengan daftar IP/CIDR proxy resmi.
+        $middleware->trustProxies(at: '*');
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'track.visit' => \App\Http\Middleware\TrackVisit::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
